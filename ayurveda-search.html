@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Disease Search — AyurVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../static/css/ayurveda-search_style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-leaf"></div>
+    AyurVeda
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/remedies" class="active">Remedies</a></li>
+    <li><a href="/dosha-quiz">Dosha Quiz</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>›</span>
+    <span>Disease Search</span>
+  </div>
+  <h1>Search <em>Remedies</em></h1>
+</div>
+
+<!-- STICKY SEARCH BAR -->
+<div class="search-banner">
+  <div class="main-search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="main-search-input" placeholder="Search by disease, herb, or symptom…" oninput="handleSearch(this.value)" autocomplete="off"/>
+    <button class="clear-btn" id="clear-btn" onclick="clearSearch()">✕</button>
+  </div>
+  <select class="sort-select" onchange="handleSort(this.value)">
+    <option value="default">Sort: Relevance</option>
+    <option value="name">Name A–Z</option>
+    <option value="easy">Easiest First</option>
+  </select>
+  <div class="result-count" id="result-count"><strong>{{ remedies|length }}</strong> remedies found</div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-title">Category</div>
+      <button class="cat-btn {% if selected_cat == 'all' %}active{% endif %}" data-cat="all" onclick="setCategory(this,'all')">
+        <span class="cat-left"><span class="cat-icon">🌿</span> All Diseases</span>
+        <span class="cat-count">{{ remedies|length }}</span>
+      </button>
+      {% set cats = [
+        ('digestion',   '🫁', 'Digestion'),
+        ('diabetes',    '🩸', 'Diabetes'),
+        ('stress',      '🧠', 'Stress & Anxiety'),
+        ('skin',        '✨', 'Skin & Hair'),
+        ('respiratory', '🌬️', 'Respiratory'),
+        ('joints',      '🦴', 'Joint & Bone'),
+        ('immunity',    '🛡️', 'Immunity'),
+        ('heart',       '❤️', 'Heart Health'),
+      ] %}
+      {% for slug, icon, label in cats %}
+      {% set count = remedies | selectattr('category','equalto', slug) | list | length %}
+      <button class="cat-btn {% if selected_cat == slug %}active{% endif %}" data-cat="{{ slug }}" onclick="setCategory(this,'{{ slug }}')">
+        <span class="cat-left"><span class="cat-icon">{{ icon }}</span> {{ label }}</span>
+        <span class="cat-count">{{ count }}</span>
+      </button>
+      {% endfor %}
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Dosha Type</div>
+      <div class="dosha-filter-group">
+        <label class="dosha-check dv"><input type="checkbox" value="vata"  onchange="updateFilters()"/><span class="dot"></span> 🍃 Vata</label>
+        <label class="dosha-check dp"><input type="checkbox" value="pitta" onchange="updateFilters()"/><span class="dot"></span> 🔥 Pitta</label>
+        <label class="dosha-check dk"><input type="checkbox" value="kapha" onchange="updateFilters()"/><span class="dot"></span> 💧 Kapha</label>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-title">Preparation Difficulty</div>
+      <div class="difficulty-btns">
+        <button class="diff-btn" data-diff="easy"     onclick="toggleDiff(this,'easy')">Easy</button>
+        <button class="diff-btn" data-diff="moderate" onclick="toggleDiff(this,'moderate')">Moderate</button>
+        <button class="diff-btn" data-diff="advanced" onclick="toggleDiff(this,'advanced')">Advanced</button>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <button class="clear-filters" onclick="resetAllFilters()">✕ Clear all filters</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="active-filters" id="active-filters"></div>
+    <div class="remedies-grid" id="remedies-grid"></div>
+    <div class="load-more-wrap" id="load-more-wrap">
+      <button class="load-more" onclick="loadMore()">Load more remedies</button>
+    </div>
+  </main>
+</div>
+
+<!-- Inject Flask data into JS -->
+
+<!-- Remedy Detail Modal -->
+<div class="modal-overlay" id="remedy-modal-overlay">
+  <div class="modal" id="remedy-modal-content"></div>
+</div>
+
+<script>
+  const flaskRemedies = {{ remedies | tojson }};
+  const initialCategory = "{{ selected_cat }}";
+</script>
+<script src="../static/js/ayurveda-search_script.js"></script>
+
+<script>
+  // Wire up modal overlay background click
+  document.getElementById('remedy-modal-overlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  // Pre-select category and search query from URL params
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const q   = params.get('q')   || '';
+    const cat = params.get('cat') || 'all';
+    if (q) {
+      const inp = document.getElementById('main-search-input');
+      if (inp) { inp.value = q; handleSearch(q); }
+    }
+    if (cat && cat !== 'all') {
+      const btn = document.querySelector('.cat-btn[data-cat="' + cat + '"]');
+      if (btn) setCategory(btn, cat);
+    }
+  })();
+</script>
+</body>
+</html>

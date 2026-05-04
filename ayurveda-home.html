@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AyurVeda — Ancient Wisdom, Modern Healing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../static/css/ayurveda-home_style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-leaf"></div>
+    AyurVeda
+  </a>
+  <ul class="nav-links">
+    <li><a href="/remedies">Remedies</a></li>
+    <li><a href="/dosha-quiz">Dosha Quiz</a></li>
+    <li><a href="#tips">Wellness Tips</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-mandala"></div>
+  <h1>Ancient Wisdom,<br><em>Modern Healing</em></h1>
+  <div class="search-wrap">
+    <div class="search-box">
+      <input type="text" placeholder="Search by disease or herb (e.g. diabetes, tulsi, stress)…" id="hero-search"/>
+      <button class="search-btn" onclick="handleSearch()">Search</button>
+    </div>
+  </div>
+</section>
+
+<!-- DISEASE CATEGORIES -->
+<section class="section section-alt fade-up" id="remedies">
+  <div class="section-header">
+    <h2 class="section-title">Browse by <span>disease</span></h2>
+    <a href="/remedies" class="see-all">All categories →</a>
+  </div>
+  <div class="disease-grid">
+    <a href="/remedies?cat=digestion"   class="disease-card" style="text-decoration:none;"><span class="disease-icon">🫁</span><div class="disease-name">Digestion</div></a>
+    <a href="/remedies?cat=diabetes"    class="disease-card" style="text-decoration:none;"><span class="disease-icon">🩸</span><div class="disease-name">Diabetes</div></a>
+    <a href="/remedies?cat=stress"      class="disease-card" style="text-decoration:none;"><span class="disease-icon">🧠</span><div class="disease-name">Stress & Anxiety</div></a>
+    <a href="/remedies?cat=skin"        class="disease-card" style="text-decoration:none;"><span class="disease-icon">✨</span><div class="disease-name">Skin & Hair</div></a>
+    <a href="/remedies?cat=respiratory" class="disease-card" style="text-decoration:none;"><span class="disease-icon">🌬️</span><div class="disease-name">Cold & Flu</div></a>
+    <a href="/remedies?cat=joints"      class="disease-card" style="text-decoration:none;"><span class="disease-icon">🦴</span><div class="disease-name">Joint & Bone</div></a>
+    <a href="/remedies?cat=heart"       class="disease-card" style="text-decoration:none;"><span class="disease-icon">❤️</span><div class="disease-name">Heart Health</div></a>
+    <a href="/remedies?cat=immunity"    class="disease-card" style="text-decoration:none;"><span class="disease-icon">🛡️</span><div class="disease-name">Immunity</div></a>
+    <a href="/remedies?cat=respiratory" class="disease-card" style="text-decoration:none;"><span class="disease-icon">🫁</span><div class="disease-name">Respiratory</div></a>
+    <a href="/remedies?cat=stress"      class="disease-card" style="text-decoration:none;"><span class="disease-icon">🧠</span><div class="disease-name">Mental Health</div></a>
+  </div>
+</section>
+
+<!-- DOSHA SECTION -->
+<section class="section section-alt fade-up" id="doshas">
+  <div class="dosha-cards">
+    <div class="dosha-card dc-vata">
+      <div class="dosha-icon">🌿</div>
+      <div class="dosha-name">Vata</div>
+      <div class="dosha-element">Air + Space</div>
+      <div class="dosha-desc">Governs movement, creativity, and the nervous system. Vata types are lively, enthusiastic, and imaginative.</div>
+      <div class="dosha-traits"><span class="d-trait">Creative</span><span class="d-trait">Light</span><span class="d-trait">Dry</span><span class="d-trait">Quick</span></div>
+    </div>
+    <div class="dosha-card dc-pitta">
+      <div class="dosha-icon">🔥</div>
+      <div class="dosha-name">Pitta</div>
+      <div class="dosha-element">Fire + Water</div>
+      <div class="dosha-desc">Governs digestion, metabolism, and transformation. Pitta types are sharp, intense, and goal-oriented.</div>
+      <div class="dosha-traits"><span class="d-trait">Sharp</span><span class="d-trait">Hot</span><span class="d-trait">Intense</span><span class="d-trait">Driven</span></div>
+    </div>
+    <div class="dosha-card dc-kapha">
+      <div class="dosha-icon">💧</div>
+      <div class="dosha-name">Kapha</div>
+      <div class="dosha-element">Earth + Water</div>
+      <div class="dosha-desc">Governs structure, stability, and nourishment. Kapha types are calm, steady, and compassionate.</div>
+      <div class="dosha-traits"><span class="d-trait">Stable</span><span class="d-trait">Calm</span><span class="d-trait">Heavy</span><span class="d-trait">Nurturing</span></div>
+    </div>
+  </div>
+  <div class="quiz-cta-wrap">
+    <button class="quiz-cta" onclick="window.location.href='/dosha-quiz'">Take the Dosha Quiz — Find your type</button>
+  </div>
+</section>
+
+<!-- WELLNESS TIPS -->
+<section class="tips-strip fade-up" id="tips">
+  <div class="section-header" style="margin-bottom:24px">
+    <h2 class="section-title" style="color:#e8f5ed">Daily <em style="color:var(--gold-l);font-family:'Cormorant Garamond',serif">wellness</em> tips</h2>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">🌄</div>
+      <div class="tip-title">Dinacharya — Morning Routine</div>
+      <div class="tip-text">Wake before sunrise, scrape your tongue, drink warm water with lemon, and practice oil pulling with sesame oil for oral health.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🌿</div>
+      <div class="tip-title">Seasonal Eating</div>
+      <div class="tip-text">Eat according to your dosha and the season. Favour warm, cooked foods in winter; cool, light foods in summer.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🧖</div>
+      <div class="tip-title">Abhyanga — Self-Massage</div>
+      <div class="tip-text">Daily warm oil massage calms Vata, nourishes the skin, improves circulation, and promotes deep, restful sleep.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 AyurVeda. Made with 🌿 for holistic wellness.</div>
+  </div>
+</footer>
+
+<script>
+  // Hero search → redirect to /remedies?q=...
+  function handleSearch() {
+    const q = document.getElementById('hero-search').value.trim();
+    if (!q) {
+      document.getElementById('hero-search').focus();
+      document.getElementById('hero-search').style.border = '2px solid #c84b2a';
+      setTimeout(() => document.getElementById('hero-search').style.border = '', 1200);
+      return;
+    }
+    window.location.href = '/remedies?q=' + encodeURIComponent(q);
+  }
+  document.getElementById('hero-search').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSearch();
+  });
+  // Clear red border on typing
+  document.getElementById('hero-search').addEventListener('input', e => {
+    e.target.style.border = '';
+  });
+</script>
+<script src="../static/js/ayurveda-home_script.js"></script>
+</body>
+</html>

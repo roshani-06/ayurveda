@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dosha Quiz — AyurVeda</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../static/css/ayurveda-dosha-quiz_style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="logo">
+    <div class="logo-leaf"></div>
+    AyurVeda
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/remedies">Remedies</a></li>
+    <li><a href="/dosha-quiz" class="active">Dosha Quiz</a></li>
+  </ul>
+</nav>
+
+<!-- INTRO SCREEN -->
+<div id="intro-screen">
+  <div class="intro-bg"></div>
+  <div class="intro-mandala"></div>
+  <div class="intro-content">
+    <h1 class="intro-title">Discover Your<br><em>Dosha Nature</em></h1>
+    <p class="intro-sub">In Ayurveda, your natural constitution is the blueprint of your mind and body. This 10-question quiz reveals your dominant dosha so you can eat, live, and heal in alignment with your true nature.</p>
+    <div class="dosha-preview">
+      <div class="dp-card dp-vata"><div class="dp-icon">🌿</div><div class="dp-name">Vata</div><div class="dp-elem">Air &amp; Space</div></div>
+      <div class="dp-card dp-pitta"><div class="dp-icon">🔥</div><div class="dp-name">Pitta</div><div class="dp-elem">Fire &amp; Water</div></div>
+      <div class="dp-card dp-kapha"><div class="dp-icon">💧</div><div class="dp-name">Kapha</div><div class="dp-elem">Earth &amp; Water</div></div>
+    </div>
+    <div class="quiz-meta">
+      <div class="qm-item"><span class="qm-icon">📋</span> 10 questions</div>
+      <div class="qm-item"><span class="qm-icon">⏳</span> 3–5 minutes</div>
+      <div class="qm-item"><span class="qm-icon">⚙️</span> Instant results</div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Begin Your Prakriti Analysis <span class="arrow">→</span></button>
+  </div>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen">
+  <div class="quiz-header">
+    <button class="q-back" onclick="goBack()">← Back</button>
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span id="prog-label">Question 1 of 10</span>
+        <span id="prog-pct">0%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="live-tracker" id="live-tracker">
+      <div class="lt-item"><div class="lt-dot lt-v"></div><span class="lt-label">V</span><span class="lt-score" id="lt-v">0</span></div>
+      <div class="lt-item"><div class="lt-dot lt-p"></div><span class="lt-label">P</span><span class="lt-score" id="lt-p">0</span></div>
+      <div class="lt-item"><div class="lt-dot lt-k"></div><span class="lt-label">K</span><span class="lt-score" id="lt-k">0</span></div>
+    </div>
+  </div>
+  <div class="q-category"><span class="qcat-pill" id="q-cat-pill">🌿 Body &amp; Physical</span></div>
+  <div class="q-stage">
+    <div class="q-card" id="q-card">
+      <div class="q-num" id="q-num">Question 01</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="q-hint" id="q-hint"></div>
+      <div class="options" id="options-wrap"></div>
+      <div class="q-nav">
+        <div class="q-nav-left">
+          <button class="skip-btn" onclick="skipQuestion()">Skip this question</button>
+        </div>
+        <button class="next-btn" id="next-btn" onclick="nextQuestion()" disabled>Next <span>→</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen">
+  <div class="result-hero" id="result-hero">
+    <div class="result-badge" id="result-badge"></div>
+    <span class="result-icon" id="result-icon"></span>
+    <h1 class="result-title" id="result-title"></h1>
+    <p class="result-sub" id="result-sub"></p>
+    <div class="dosha-bars" id="dosha-bars"></div>
+  </div>
+  <div class="result-body" id="result-body"></div>
+</div>
+
+<!-- Pass Flask API URL base to JS -->
+<script>
+  const API_BASE = "";
+  const REMEDIES_URL = "/remedies";
+</script>
+<script src="../static/js/ayurveda-dosha-quiz_script.js"></script>
+</body>
+</html>
